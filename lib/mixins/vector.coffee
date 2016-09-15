@@ -18,6 +18,8 @@ module.exports =
     @addContent 'Q'
     
   closePath: ->
+    @_pathCurrentX = @_pathStartX
+    @_pathCurrentY = @_pathStartY
     @addContent 'h'
   
   lineWidth: (w) ->
@@ -56,18 +58,36 @@ module.exports =
     @addContent "[] 0 d"
     
   moveTo: (x, y) ->
+    @_pathStartX = x
+    @_pathStartY = y
+    @_pathCurrentX = x
+    @_pathCurrentY = y
     @addContent "#{x} #{y} m"
 
   lineTo: (x, y) ->
+    @_pathCurrentX = x
+    @_pathCurrentY = y
     @addContent "#{x} #{y} l"
     
   bezierCurveTo: (cp1x, cp1y, cp2x, cp2y, x, y) ->
+    @_pathCurrentX = x
+    @_pathCurrentY = y
     @addContent "#{cp1x} #{cp1y} #{cp2x} #{cp2y} #{x} #{y} c"
     
   quadraticCurveTo: (cpx, cpy, x, y) ->
-    @addContent "#{cpx} #{cpy} #{x} #{y} v"
-    
+    cp1x = @_pathCurrentX + 2/3 * (cpx - @_pathCurrentX)
+    cp1y = @_pathCurrentY + 2/3 * (cpy - @_pathCurrentY)
+    cp2x = x + 2/3 * (cpx - x)
+    cp2y = y + 2/3 * (cpy - y)
+    @_pathCurrentX = x
+    @_pathCurrentY = y
+    @bezierCurveTo cp1x, cp1y, cp2x, cp2y, x, y
+
   rect: (x, y, w, h) ->
+    @_pathStartX = x
+    @_pathStartY = y
+    @_pathCurrentX = x
+    @_pathCurrentY = y
     @addContent "#{x} #{y} #{w} #{h} re"
     
   roundedRect: (x, y, w, h, r = 0) ->
