@@ -133,7 +133,7 @@ class PDFDocument extends stream.Readable
   number: (n) ->
     if n > -1e21 and n < 1e21
       return Math.round(n * 1e6) / 1e6
-    return 0
+    throw new Error "unsupported number: #{n}"
 
   _read: ->
       # do nothing, but this method is required by node
