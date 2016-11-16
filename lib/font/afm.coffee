@@ -6,11 +6,6 @@ class AFMFont
     @kerning = @contents.kerning
     @glyphGroups = @contents.glyphGroups
 
-    @glyphWidths[173] ||= @glyphWidths[45]
-    @glyphGroups[173] ||= @glyphGroups[45]
-    @glyphWidths[160] ||= @glyphWidths[32]
-    @glyphGroups[160] ||= @glyphGroups[32]
-
     @bbox = (+e for e in @attributes['FontBBox'].split /\s+/)
     @ascender = +(@attributes['Ascender'] or @bbox[3] or 0)
     @descender = +(@attributes['Descender'] or @bbox[1] or 0)
