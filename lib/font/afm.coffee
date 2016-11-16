@@ -47,7 +47,7 @@ class AFMFont
     for i in [0...text.length]
       char = text.charCodeAt(i)
       char = WIN_ANSI_MAP[char] or char
-      res.push char.toString(16)
+      res.push ('00' + char.toString(16)).slice(-2)
     
     return res
 
