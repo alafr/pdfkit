@@ -1,6 +1,7 @@
 class PDFGroup
   constructor: (@doc, @bbox) ->
-    @name = 'G' + (++@doc._groupCount)
+    @globals = doc.globals
+    @name = 'G' + (++@globals.groupCount)
     @closed = false
     @resources = @doc.ref
       ProcSet: ['PDF', 'Text', 'ImageB', 'ImageC', 'ImageI']
@@ -26,7 +27,7 @@ class PDFGroup
         right: 0
         bottom: 0
 
-    @doc._groups[@name] = this
+    @globals.groups[@name] = this
 
     @initColor()
     @initVector()
