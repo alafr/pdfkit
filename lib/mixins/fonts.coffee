@@ -3,14 +3,14 @@ PDFFont = require '../font'
 module.exports =
   initFonts: ->
     # Lookup table for embedded fonts
-    @_fontFamilies = {}
-    @_fontCount = 0
+    @globals.fontFamilies = {}
+    @globals.fontCount ?= 0
 
     # Font state
     @_fontSize = 12
     @_font = null
 
-    @_registeredFonts = {}
+    @globals.registeredFonts ?= {}
 
     # Set the default font
     @font 'Helvetica'
@@ -21,9 +21,9 @@ module.exports =
       family = null
 
     # check registered fonts if src is a string
-    if typeof src is 'string' and @_registeredFonts[src]
+    if typeof src is 'string' and @globals.registeredFonts[src]
       cacheKey = src
-      {src, family} = @_registeredFonts[src]
+      {src, family} = @globals.registeredFonts[src]
     else
       cacheKey = family or src
       cacheKey = null unless typeof cacheKey is 'string'
@@ -31,26 +31,26 @@ module.exports =
     @fontSize size if size?
 
     # fast path: check if the font is already in the PDF
-    if font = @_fontFamilies[cacheKey]
+    if font = @globals.fontFamilies[cacheKey]
       @_font = font
       return this
 
     # load the font
-    id = 'F' + (++@_fontCount)
+    id = 'F' + (++@globals.fontCount)
     @_font = PDFFont.open(this, src, family, id)
 
     # check for existing font familes with the same name already in the PDF
     # useful if the font was passed as a buffer
-    if font = @_fontFamilies[@_font.name]
+    if font = @globals.fontFamilies[@_font.name]
       @_font = font
       return this
 
     # save the font for reuse later
     if cacheKey
-      @_fontFamilies[cacheKey] = @_font
+      @globals.fontFamilies[cacheKey] = @_font
 
     if @_font.name
-      @_fontFamilies[@_font.name] = @_font
+      @globals.fontFamilies[@_font.name] = @_font
 
     return this
 
@@ -61,7 +61,7 @@ module.exports =
     @_font.lineHeight @_fontSize, includeGap
 
   registerFont: (name, src, family) ->
-    @_registeredFonts[name] =
+    @globals.registeredFonts[name] =
       src: src
       family: family
 
