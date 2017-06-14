@@ -8,6 +8,9 @@ module.exports =
     @y = 0
     @_lineGap = 0
 
+  maxY: () ->
+    return @page.height - @page.margins.bottom
+
   lineGap: (@_lineGap) ->
     return this
 
