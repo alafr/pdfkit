@@ -3,9 +3,9 @@
 module.exports =
   initColor: ->
     # The opacity dictionaries
-    @_opacityRegistry = {}
-    @_opacityCount = 0
-    @_gradCount = 0
+    @globals.opacityRegistry ?= {}
+    @globals.opacityCount = 0
+    @globals.gradCount = 0
 
   _normalizeColor: (color) ->
     if color instanceof PDFGradient
@@ -88,8 +88,8 @@ module.exports =
      strokeOpacity = Math.max 0, Math.min 1, strokeOpacity  if strokeOpacity?
      key = "#{fillOpacity}_#{strokeOpacity}"
 
-     if @_opacityRegistry[key]
-       [dictionary, name] = @_opacityRegistry[key]
+     if @globals.opacityRegistry[key]
+       [dictionary, name] = @globals.opacityRegistry[key]
      else
        dictionary =
          Type: 'ExtGState'
@@ -99,9 +99,9 @@ module.exports =
 
        dictionary = @ref dictionary
        dictionary.end()
-       id = ++@_opacityCount
+       id = ++@globals.opacityCount
        name = "Gs#{id}"
-       @_opacityRegistry[key] = [dictionary, name]
+       @globals.opacityRegistry[key] = [dictionary, name]
 
      @addResource 'ExtGState', name, dictionary
      @addContent "/#{name} gs"
