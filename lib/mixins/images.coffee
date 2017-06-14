@@ -2,8 +2,8 @@ PDFImage = require '../image'
 
 module.exports =
   initImages: ->
-    @_imageRegistry = {}
-    @_imageCount = 0
+    @globals.imageRegistry ?= {}
+    @globals.imageCount ?= 0
     
   image: (src, x, y, options = {}) ->
     if typeof x is 'object'
@@ -14,7 +14,7 @@ module.exports =
     y = y ? options.y ? @y
 
     if typeof src is 'string'
-      image = @_imageRegistry[src]
+      image = @globals.imageRegistry[src]
 
     if not image
       if src.width and src.height
@@ -89,11 +89,11 @@ module.exports =
 
   openImage: (src) ->
     if typeof src is 'string'
-      image = @_imageRegistry[src]
+      image = @globals.imageRegistry[src]
 
     if not image
-      image = PDFImage.open src, 'I' + (++@_imageCount)
+      image = PDFImage.open src, 'I' + (++@globals.imageCount)
       if typeof src is 'string'
-        @_imageRegistry[src] = image
+        @globals.imageRegistry[src] = image
 
     return image
