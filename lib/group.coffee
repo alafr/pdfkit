@@ -15,12 +15,23 @@ class PDFGroup
         CS: 'DeviceRGB'
         I: true
         K: false
-    
-    @_ctm = [1, 0, 0, 1, 0, 0]
+
+    # text.coffee mixin uses these
+    @page =
+      width: @bbox[2] - @bbox[0]
+      height: @bbox[3] - @bbox[1]
+      margins:
+        left: -@bbox[0]
+        top: -@bbox[1]
+        right: 0
+        bottom: 0
+
     @doc._groups[@name] = this
 
     @initColor()
     @initVector()
+    @initFonts()
+    @initText()
     @initImages()
 
   mixin = (methods) =>
@@ -29,6 +40,8 @@ class PDFGroup
 
   mixin require './mixins/color'
   mixin require './mixins/vector'
+  mixin require './mixins/fonts'
+  mixin require './mixins/text'
   mixin require './mixins/images'
 
   close: () ->
