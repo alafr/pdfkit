@@ -4,7 +4,7 @@ module.exports =
   initGroups: ->
     @_groupCount = 0
     @_maskCount = 0
-    @doc._groups = {}
+    @_groups = {}
 
   createGroup: (bbox) ->
     return new PDFGroup(this, bbox)
