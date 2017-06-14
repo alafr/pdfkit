@@ -2,9 +2,9 @@ PDFGroup = require '../group'
 
 module.exports =
   initGroups: ->
-    @_groupCount = 0
-    @_maskCount = 0
-    @_groups = {}
+    @globals.groupCount ?= 0
+    @globals.maskCount ?= 0
+    @globals.groups ?= {}
 
   createGroup: (bbox) ->
     return new PDFGroup(this, bbox)
@@ -17,7 +17,7 @@ module.exports =
 
   applyMask: (group, clip) ->
     group.close() unless group.closed
-    name = 'M' + @_maskCount++
+    name = 'M' + (++@globals.maskCount)
     gstate = @ref
       Type: 'ExtGState'
       CA: 1
