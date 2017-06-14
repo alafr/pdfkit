@@ -56,7 +56,7 @@ class PDFGradient
         
       fn.end()
         
-    @id = 'Sh' + (++@doc._gradCount)
+    @id = 'Sh' + (++@doc.globals.gradCount)
     
     shader = @shader fn
     shader.end()
