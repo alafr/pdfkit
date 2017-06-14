@@ -1,7 +1,5 @@
 class PDFGroup
   constructor: (@doc, @bbox) ->
-
-    @bbox = @bbox
     @name = 'G' + (++@doc._groupCount)
     @closed = false
     @resources = @doc.ref
@@ -46,5 +44,8 @@ class PDFGroup
     dictionary = @resources.data[type] ?= {}
     dictionary[key] ?= data
     return this
+
+  getBBox: () ->
+    return @bbox
 
 module.exports = PDFGroup
