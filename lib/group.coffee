@@ -35,7 +35,10 @@ class PDFGroup
     @resources.end()
     @xobj.end()
     @closed = true
-    
+
+  ref: (data) ->
+    return @doc.ref(data)
+
   addContent: (data) ->
     @xobj.write data
     return this
