@@ -39,7 +39,7 @@ class PDFDocument extends stream.Readable
     @page = null
     
     # Global variables
-    @_globals = {}
+    @globals = {}
 
     # Initialize mixins
     @initColor()
