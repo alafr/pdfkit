@@ -151,6 +151,9 @@ class PDFDocument extends stream.Readable
     dictionary[key] ?= data
     return this
 
+  getBBox: () ->
+    return [0, 0, @page.width, @page.height]
+
   _refEnd: (ref) ->
     @_offsets[ref.id - 1] = ref.offset
     if --@_waiting is 0 and @_ended
