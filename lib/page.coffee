@@ -51,10 +51,7 @@ class PDFPage
       MediaBox: [0, 0, @width, @height]
       Contents: @content
       Resources: @resources
-      
-  maxY: ->
-    @height - @margins.bottom
-        
+
   write: (chunk) ->
     @content.write chunk
   
