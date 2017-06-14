@@ -22,7 +22,7 @@ class LineWrapper extends EventEmitter
       @height = options.height
       @maxY = @startY + options.height
     else
-      @maxY = @document.page.maxY()
+      @maxY = @document.maxY()
     
     # handle paragraph indents
     @on 'firstLine', (options) =>
@@ -215,7 +215,7 @@ class LineWrapper extends EventEmitter
       @document.addPage()
       @column = 1
       @startY = @document.page.margins.top
-      @maxY = @document.page.maxY()
+      @maxY = @document.maxY()
       @document.x = @startX
       @document.fillColor @document._fillColor... if @document._fillColor
       @emit 'pageBreak', options, this
