@@ -103,7 +103,7 @@ module.exports =
        name = "Gs#{id}"
        @_opacityRegistry[key] = [dictionary, name]
 
-     @page.ext_gstates[name] = dictionary
+     @addResource 'ExtGState', name, dictionary
      @addContent "/#{name} gs"
 
   linearGradient: (x1, y1, x2, y2) ->
