@@ -194,6 +194,9 @@ class PDFDocument extends stream.Readable
     for name, font of @_fontFamilies
       font.finalize()
 
+    for name, group of @_groups
+      group.close() unless group.closed
+
     @_root.end()
     @_root.data.Pages.end()
 
