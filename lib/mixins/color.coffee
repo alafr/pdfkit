@@ -4,8 +4,8 @@ module.exports =
   initColor: ->
     # The opacity dictionaries
     @globals.opacityRegistry ?= {}
-    @globals.opacityCount = 0
-    @globals.gradCount = 0
+    @globals.opacityCount ?= 0
+    @globals.gradCount ?= 0
 
   _normalizeColor: (color) ->
     if color instanceof PDFGradient
