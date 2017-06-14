@@ -78,7 +78,7 @@ class PDFGradient
         
       grad = grad.embed(@matrix)
       
-      pageBBox = [0, 0, @doc.page.width, @doc.page.height]
+      pageBBox = @doc.getBBox()
       
       form = @doc.ref
         Type: 'XObject'
@@ -112,8 +112,8 @@ class PDFGradient
         PaintType: 1
         TilingType: 2
         BBox: pageBBox
-        XStep: pageBBox[2]
-        YStep: pageBBox[3]
+        XStep: pageBBox[2] - pageBBox[0]
+        YStep: pageBBox[3] - pageBBox[1]
         Resources:
           ProcSet: ['PDF', 'Text', 'ImageB', 'ImageC', 'ImageI']
           Pattern:
