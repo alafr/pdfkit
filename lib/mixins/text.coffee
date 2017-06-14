@@ -217,7 +217,7 @@ module.exports =
     y = @page.height - y - (@_font.ascender / 1000 * @_fontSize)
 
     # add current font to page if necessary
-    @page.fonts[@_font.id] ?= @_font.ref()
+    @addResource 'Font', @_font.id, @_font.ref()
 
     # begin the text object
     @addContent "BT"
