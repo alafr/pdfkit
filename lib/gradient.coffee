@@ -124,10 +124,10 @@ class PDFGradient
       opacityPattern.write "/Gs1 gs /Pattern cs /Sh1 scn"
       opacityPattern.end "#{pageBBox.join(" ")} re f"
       
-      @doc.page.patterns[@id] = opacityPattern
-      
+      @doc.addResource 'Pattern', @id, opacityPattern
+
     else
-      @doc.page.patterns[@id] = pattern
+      @doc.addResource 'Pattern', @id, pattern
       
     return pattern
 
