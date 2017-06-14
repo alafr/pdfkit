@@ -144,6 +144,11 @@ class PDFDocument extends stream.Readable
     @page.write data
     return this
 
+  addResource: (type, key, data) ->
+    dictionary = @page.resources.data[type] ?= {}
+    dictionary[key] ?= data
+    return this
+
   _refEnd: (ref) ->
     @_offsets[ref.id - 1] = ref.offset
     if --@_waiting is 0 and @_ended
