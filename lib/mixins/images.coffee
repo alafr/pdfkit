@@ -25,7 +25,7 @@ module.exports =
     unless image.obj
       image.embed this
 
-    @page.xobjects[image.label] ?= image.obj
+    @addResource 'XObject', image.label, image.obj
 
     w = options.width or image.width
     h = options.height or image.height
