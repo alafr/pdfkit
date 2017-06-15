@@ -1,6 +1,6 @@
 class PDFGroup
   constructor: (@doc, @bbox) ->
-    @globals = doc.globals
+    @globals = @doc.globals
     @name = 'G' + (++@globals.groupCount)
     @closed = false
     @resources = @doc.ref
@@ -34,6 +34,7 @@ class PDFGroup
     @initFonts()
     @initText()
     @initImages()
+    @initGroups()
 
   mixin = (methods) =>
     for name, method of methods
@@ -44,6 +45,7 @@ class PDFGroup
   mixin require './mixins/fonts'
   mixin require './mixins/text'
   mixin require './mixins/images'
+  mixin require './mixins/groups'
 
   close: () ->
     @resources.end()
