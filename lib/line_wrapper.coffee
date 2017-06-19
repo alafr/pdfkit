@@ -156,6 +156,7 @@ class LineWrapper extends EventEmitter
           buffer = buffer + @ellipsis
           
         if bk.required and w > @spaceLeft
+          emitLine()
           buffer = word
           textWidth = w
           wc = 1
