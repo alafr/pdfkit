@@ -191,7 +191,7 @@ module.exports =
     renderedWidth = options.textWidth + (wordSpacing * (options.wordCount - 1)) + (characterSpacing * (text.length - 1))
 
     # create link annotations if the link option is given
-    if options.link
+    if options.link?
       @link x, y, renderedWidth, @currentLineHeight(), options.link
 
     # create underline or strikethrough line
@@ -252,7 +252,11 @@ module.exports =
         positions.push positionsWord...
 
         # add the word spacing to the end of the word
-        positions[positions.length - 1].xAdvance += wordSpacing
+        # clone object because of cache
+        space = {}
+        space[key] = val for key, val of positions[positions.length - 1]
+        space.xAdvance += wordSpacing
+        positions[positions.length - 1] = space
     else
       [encoded, positions] = @_font.encode(text, options.features)
 
